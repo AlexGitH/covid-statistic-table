@@ -2,6 +2,7 @@
 
 # custom
 .eslint*
+.jsbeaut*
 
 # dependencies
 /node_modules
