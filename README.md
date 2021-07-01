@@ -10,5 +10,5 @@
 
 ## REFERENCES
 
-data: [Coronavirus COVID19 API](https://documenter.getpostman.com/view/10808728/SzS8rjbc)
-API: [COVID19 API](https://api.covid19api.com/)
+- data: [Coronavirus COVID19 API](https://documenter.getpostman.com/view/10808728/SzS8rjbc)
+- API: [COVID19 API](https://api.covid19api.com/)
