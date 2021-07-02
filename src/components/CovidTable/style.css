@@ -1,0 +1,30 @@
+table.CovidTable {
+  border: 1px solid #1C6EA4;
+  background-color: #EEEEEE;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.CovidTable td, table.CovidTable th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
+table.CovidTable tbody td {
+  font-size: 13px;
+}
+table.CovidTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.CovidTable thead {
+  background: #1C6EA4;
+  border-bottom: 2px solid #444444;
+}
+table.CovidTable thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+  border-left: 2px solid #D0E4F5;
+}
+table.CovidTable thead th:first-child {
+  border-left: none;
+}
