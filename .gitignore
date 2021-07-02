@@ -3,6 +3,7 @@
 # custom
 .eslint*
 .jsbeaut*
+*/tmp/*
 
 # dependencies
 /node_modules
