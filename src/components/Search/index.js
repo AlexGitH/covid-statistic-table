@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './style.css';
+import scope from './scope.svg';
 
 
 const Search = () => {
@@ -11,7 +12,8 @@ const Search = () => {
     placeholder="Search..."
     value={search}
     onChange={ e => setSearch( e.target.value ) } />
-    <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Crystal_Clear_action_viewmag.png/16px-Crystal_Clear_action_viewmag.png" alt="Search" />
+    
+    <img src={scope} alt="Search" />
   </div>
 }
 
