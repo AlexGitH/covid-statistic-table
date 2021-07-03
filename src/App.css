@@ -18,10 +18,33 @@
 
 
 .App {
+  margin: 40px 60px;
   font-family: 'Roboto';
   font-weight: bold;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
 }
 
+.App .table-top {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.App .table-top>h1{
+  flex: 1 1 100%;
+}
+
+.table-top h1 {
+  font-size: 72px;
+}
+
+.table-top .Covid19Logo{
+  width:200px;
+}
 /* .App {
   text-align: center;
 }
