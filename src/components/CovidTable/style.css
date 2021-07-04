@@ -1,0 +1,62 @@
+table.CovidTable {
+  /* border: 1px solid #1C6EA4;
+  background-color: #EEEEEE; */
+  border: none; 
+  width: 100%;
+  text-align: left;
+  /* border-collapse: collapse; */
+  border-collapse: separate; 
+  border-spacing: 0 20px;
+}
+
+table.CovidTable tr {
+  /* box-shadow: 1px 2px 2px #AAAAAA; */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  line-height: 80px;
+}
+
+table.CovidTable tr * {
+  border-left : 1px solid #B2B2B2;
+}
+
+
+
+
+
+table.CovidTable td, table.CovidTable th {
+  /* border: 1px solid #AAAAAA; */
+  /* padding: 3px 2px; */
+  padding-left: 23px;
+}
+table.CovidTable tbody td {
+  font-size: 24px;
+}
+/* table.CovidTable tr:nth-child(even) {
+  background: #D0E4F5;
+} */
+/* table.CovidTable thead { */
+table.CovidTable thead tr {
+  /* border-bottom: 2px solid #444444; */
+  border-radius: 20px;
+}
+
+table.CovidTable thead th {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFFFFF;
+  border-left: 2px solid #D0E4F5;
+  background: #2196F3;
+}
+
+table.CovidTable tr>*:first-child {
+  border-left: none;
+}
+
+table.CovidTable thead tr *:first-child {
+  border-radius: 20px 0 0 20px;
+}
+
+table.CovidTable thead tr *:last-child {
+  border-radius: 0 20px 20px 0;
+}

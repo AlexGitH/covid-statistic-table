@@ -1,23 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import CovidTable from './components/CovidTable';
+import Logo from './components/Logo';
+import Search from './components/Search';
+
+function* getColumnGenerator( current=0, step=1 ) {
+  while( true ){
+    yield {
+      dataIndex:`header${current}`,
+      title : `HEADER_${current}`
+    };
+    current += step;
+  }
+}
+
+
+const getColumnConfig = getColumnGenerator( 0 );
+
+const columns = Array.from({
+  length : 4
+}, ()=>getColumnConfig.next().value )
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="table-top">
+        <Logo />
+        <h1>STATISTIC</h1>
+        <Search />
+      </div>
+      <CovidTable columns={columns}/>
     </div>
   );
 }
