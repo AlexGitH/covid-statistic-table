@@ -20,16 +20,12 @@ const columnConfigs = [{
   title     : 'Total Confirmed'
 }];
 
-// const getColumnConfig = getColumnGenerator( 0 );
-
-// const columns = Array.from({
-//   length : 3
-// }, ()=>getColumnConfig.next().value )
-
 const Preloader = ()=><img className="loader" src={loading} alt="Loading..." />
+const Error = ( {text} )=><h1 className="error">{text}</h1>
 
 function App() {
-  const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState( [] );
+  const [error, setError] = useState( null )
 
   useEffect( () => {
     const fetchCountries = async() => {
@@ -40,11 +36,13 @@ function App() {
 
       try {
         const response = await fetch( 'https://api.covid19api.com/summary', requestOptions )
-        const orderedCountries = (await response.json()).Countries.map((x,i)=>({...x, Index: i + 1 }));
+        const orderedCountries = ( await response.json() ).Countries.map( ( x, i ) => ({...x, Index: i + 1 }) );
+        setError( null );
         setCountries( orderedCountries );
       }
-      catch (error) {
-        throw error;
+      catch ( err ) {
+        const text = err.toString();
+        setError( text );
       }
     }
 
@@ -54,17 +52,19 @@ function App() {
 
   return (
     <div className="App">
-      { countries.length > 1 ?
-        <>
-      {isDetailsVisible && <CountryDetailsModal />}
-      <div className="table-top">
-        <Logo />
-        <h1>STATISTIC</h1>
-        <Search />
-      </div>
-      <CovidTable countries={countries} columns={columnConfigs}/>
-      </>
-      : <Preloader />
+      { error != null
+        ? <Error text={error} />
+        : countries.length > 1
+          ? <>
+              {isDetailsVisible && <CountryDetailsModal />}
+              <div className="table-top">
+                <Logo />
+                <h1>STATISTIC</h1>
+                <Search />
+              </div>
+              <CovidTable countries={countries} columns={columnConfigs}/>
+            </>
+          : <Preloader />
       }
     </div>
   );
