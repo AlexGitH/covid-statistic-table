@@ -42,11 +42,16 @@
   height: 200px;
 }
 
+.App .error,
 .App .loader {
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.App .error {
+  color: #500303;
 }
 
 .App .table-top h1 {
