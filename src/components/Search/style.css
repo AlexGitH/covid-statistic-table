@@ -21,6 +21,8 @@
   background: transparent;
   padding: 0 32px;
   font-size: 48px;
+  font-weight: normal;
+  font-family: 'Roboto';
   line-height: 80px;
 }
 
