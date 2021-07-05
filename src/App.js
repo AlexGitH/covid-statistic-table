@@ -1,5 +1,6 @@
 import './App.css';
 import CovidTable from './components/CovidTable';
+import CountryDetailsModal from './components/CountryDetailsModal';
 import Logo from './components/Logo';
 import Search from './components/Search';
 
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <div className="App">
+      <CountryDetailsModal />
       <div className="table-top">
         <Logo />
         <h1>STATISTIC</h1>
