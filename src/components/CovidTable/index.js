@@ -2,7 +2,6 @@ import './style.css';
 
 const CovidTable = ({countries,columns})=>{
   
-  console.log('CovidTable:', 'columns:', columns);
   return (
 
     <table className="CovidTable">
