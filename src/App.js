@@ -9,31 +9,6 @@ import loading from './loading-tr.gif';
 
 const isDetailsVisible = false;
 
-// function* getColumnGenerator( current=0, step=1 ) {
-//   while( true ){
-//     yield {
-//       dataIndex:`header${current}`,
-//       title : `HEADER_${current}`
-//     };
-//     current += step;
-//   }
-// }
-
-// const fetchCountries = async() => {
-//   const requestOptions = {
-//     method: 'GET',
-//     redirect: 'follow'
-//   };
-
-//   try {
-//     const response = await fetch( 'https://api.covid19api.com/summary', requestOptions )
-//     return (await response.json()).Countries.map((x,i)=>({...x, Index: i + 1 }));
-//   }
-//   catch (error) {
-//     throw error;
-//   }
-// }
-
 const columnConfigs = [{
   dataIndex : 'Index',
   title     : '№'
