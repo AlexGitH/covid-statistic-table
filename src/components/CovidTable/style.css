@@ -43,7 +43,7 @@ table.CovidTable thead tr {
 
 table.CovidTable thead th {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: bold;
   color: #FFFFFF;
   border-left: 2px solid #D0E4F5;
   background: #2196F3;
