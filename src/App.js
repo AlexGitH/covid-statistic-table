@@ -1,4 +1,6 @@
 import './App.css';
+import React, { useState, useEffect } from 'react'
+
 import CovidTable from './components/CovidTable';
 import CountryDetailsModal from './components/CountryDetailsModal';
 import Logo from './components/Logo';
@@ -6,24 +8,48 @@ import Search from './components/Search';
 
 const isDetailsVisible = false;
 
-function* getColumnGenerator( current=0, step=1 ) {
-  while( true ){
-    yield {
-      dataIndex:`header${current}`,
-      title : `HEADER_${current}`
-    };
-    current += step;
-  }
-}
+const columnConfigs = [{
+  dataIndex : 'Index',
+  title     : '№'
+},{
+  dataIndex : 'Country',
+  title     : 'Country'
+},{
+  dataIndex : 'TotalConfirmed',
+  title     : 'Total Confirmed'
+}];
 
+// const getColumnConfig = getColumnGenerator( 0 );
 
-const getColumnConfig = getColumnGenerator( 0 );
+// const columns = Array.from({
+//   length : 3
+// }, ()=>getColumnConfig.next().value )
 
-const columns = Array.from({
-  length : 4
-}, ()=>getColumnConfig.next().value )
+const Preloader = ()=><img className="loader" src={loading} alt="Loading..." />
 
 function App() {
+  const [countries, setCountries] = useState([]);
+
+  useEffect( () => {
+    const fetchCountries = async() => {
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+
+      try {
+        const response = await fetch( 'https://api.covid19api.com/summary', requestOptions )
+        const orderedCountries = (await response.json()).Countries.map((x,i)=>({...x, Index: i + 1 }));
+        setCountries( orderedCountries );
+      }
+      catch (error) {
+        throw error;
+      }
+    }
+
+    fetchCountries();
+  }, [])
+
 
   return (
     <div className="App">
@@ -33,7 +59,7 @@ function App() {
         <h1>STATISTIC</h1>
         <Search />
       </div>
-      <CovidTable columns={columns}/>
+      <CovidTable countries={countries} columns={columnConfigs}/>
     </div>
   );
 }
