@@ -37,15 +37,16 @@
   flex: 1 1 100%;
 }
 
-.table-top h1 {
-  font-size: 72px;
+.App img.loader{
+  width: 200px;
+  height: 200px;
 }
 
-.table-top .Covid19Logo{
-  width:200px;
-}
-/* .App {
-  text-align: center;
+.App .loader {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .App-logo {
