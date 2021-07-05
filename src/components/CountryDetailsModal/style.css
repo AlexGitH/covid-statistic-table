@@ -11,14 +11,16 @@
   background-color: #00000066;
 }
 
+.CountryDetailsModal .country-modal-content {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
 
-
-.CountryDetailsModal .content {
-  /* position: relative */
+  border-radius: 20px;
   background: white;
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 600px;
+  height: 400px;
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -30,63 +32,95 @@
   animation-duration: 0.4s
 }
 
-/* .modal-content {
-  position: relative;
-  background-color: #bed1e7;
-  margin: auto;
-  padding: 0;
-  border: 2px solid #6f88a8;
-  width: 50%;
-  max-width: 600px;
-  min-width: 300px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
-} */
-
-.CountryDetailsModal .body table th {
-  text-align: left;
-  min-width: 120px;
+.CountryDetailsModal .country-modal-header {
+  margin: 20px 0 0 0;
 }
 
-.CountryDetailsModal .body table td {
+.CountryDetailsModal .country-modal-body {
+  flex: 1 1 100%;
+  margin: 0 20px;
+}
+
+.CountryDetailsModal .country-modal-footer {
+  margin: 0 0 20px 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.CountryDetailsModal .country-modal-header h4{ 
+  text-align: center;
+  font-weight: 700;
+  line-height: 56px;
+  font-size: 48px;
+  color: black;
+}
+
+.CountryDetailsModal .country-modal-body table{ 
+  width: 100%;
+  color: #666;
+  font-weight: 400;
+  font-size: 24px;
+  border-collapse: separate; 
+  border-spacing: 0 37px;
+}
+
+.CountryDetailsModal .country-modal-body table td {
   overflow-wrap: anywhere;
+}
+
+.CountryDetailsModal .country-modal-body table td:last-child {
+  text-align: right;
+}
+
+.CountryDetailsModal .country-modal-body table td img{
+  height: 100%;
+  width: 30px;
+}
+
+.CountryDetailsModal .country-modal-footer>button {
+  width: 171px;
+  height: 49px;
+  background: #2196F3;
+  border-radius: 20px;
+  border: none;
+  font-family: 'Roboto';
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+}
+
+.CountryDetailsModal .country-modal-footer>button:hover {
+  background-color: #0370fd;
+}
+
+.CountryDetailsModal .country-modal-footer>button:active {
+  background-color: #2e7fc2;
+  transform: translateY(4px);
 }
 
 @-webkit-keyframes animatetop {
   from {
-    top: -300px;
-    opacity: 0
+    top: -600px;
+    opacity: 0;
   }
 
   to {
-    top: 0;
-    opacity: 1
+    top: 50%;
+    opacity: 1;
   }
 }
 
 @keyframes animatetop {
   from {
-    top: -300px;
-    opacity: 0
+    top: -600px;
+    opacity: 0;
   }
 
   to {
-    top: 0;
-    opacity: 1
+    top: 50%;
+    opacity: 1;
   }
-}
-
-.CountryDetailsModal .header {
-  padding: 2px 16px;
-  /* line-height: 40px; */
-  background-color: white;
-  font-size: 42px;
-  color: black;
-}
-
-.CountryDetailsModal .body {
-  padding: 2px 16px;
 }
