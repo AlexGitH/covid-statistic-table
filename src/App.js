@@ -4,6 +4,8 @@ import CountryDetailsModal from './components/CountryDetailsModal';
 import Logo from './components/Logo';
 import Search from './components/Search';
 
+const isDetailsVisible = false;
+
 function* getColumnGenerator( current=0, step=1 ) {
   while( true ){
     yield {
@@ -25,7 +27,7 @@ function App() {
 
   return (
     <div className="App">
-      <CountryDetailsModal />
+      {isDetailsVisible && <CountryDetailsModal />}
       <div className="table-top">
         <Logo />
         <h1>STATISTIC</h1>
