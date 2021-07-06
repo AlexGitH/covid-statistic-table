@@ -7,6 +7,8 @@ import Logo from './components/Logo';
 import Search from './components/Search';
 import loading from './loading-tr.gif';
 
+import fetchCountries from './api/covidApi'
+
 const isDetailsVisible = false;
 
 const columnConfigs = [{
@@ -28,25 +30,7 @@ function App() {
   const [error, setError] = useState( null )
 
   useEffect( () => {
-    const fetchCountries = async() => {
-      const requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-      };
-
-      try {
-        const response = await fetch( 'https://api.covid19api.com/summary', requestOptions )
-        const orderedCountries = ( await response.json() ).Countries.map( ( x, i ) => ({...x, Index: i + 1 }) );
-        setError( null );
-        setCountries( orderedCountries );
-      }
-      catch ( err ) {
-        const text = err.toString();
-        setError( text );
-      }
-    }
-
-    fetchCountries();
+    fetchCountries({setError,setCountries});
   }, [])
 
 
