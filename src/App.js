@@ -8,9 +8,8 @@ import Search from './components/Search';
 import store from './redux/store';
 import {Provider, connect}   from 'react-redux';
 import {
-  actionLoadCovidData,
-  // actionSortCovidTableAsc,
-  // actionSortCovidTableDesc  
+  actionFullLoadCovidData,
+  actionSortCovidTable,
 } from './redux/actions';
 
 const isDetailsVisible = false;
@@ -27,16 +26,16 @@ const columnConfigs = [{
 }];
 
 const CCovidTable= connect(state=>({
-  countries: state.promise.countries?.payload,
-  error: state.promise.countries?.error?.toString(),
-// }), dispatch=>({
-//   sortAsc  : dataIndex=>dispatch( actionSortCovidTableAsc( dataIndex ) ),
-//   sortDesc : dataIndex=>dispatch( actionSortCovidTableDesc( dataIndex ) )
-// }))(CovidTable);
+  countries       : state.promise.countries?.payload,
+  error           : state.promise.countries?.error?.toString(),
+  visibleCountries: state.covidTable.visibleCountries,
+  sortingField    : state.covidTable.sortingField
+}), dispatch=>({
+  onSort: (countries, dataIndex, {dataIndex:sortingDataIndex, isDesc } ) =>
+                 dispatch( actionSortCovidTable( countries, dataIndex, sortingDataIndex, isDesc ) ),
 }))(CovidTable);
 
-store.dispatch( actionLoadCovidData() )
-
+store.dispatch( actionFullLoadCovidData() )
 
 function App() {
   return (
@@ -52,7 +51,6 @@ function App() {
             </div>
             <CCovidTable columns={columnConfigs}/>
           </>
-        
         }
       </div>
     </Provider>

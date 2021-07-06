@@ -26,58 +26,41 @@ const actionPromise = ( name = 'default', p = Promise.resolve() ) =>
   }
 
 
-const actionFetchCounties = () => async dispatch => dispatch( actionPromise( 'countries', fetchCountries() ) );
-
 const actionSetCovidData = countries => ({ type: SET_COVID_DATA, countries });
 
 
-
-// sort
-function compareDesc( a, b) {
-  return a > b ?  1 : 
-         a < b ? -1 : 0;
+const getSortType = ( dataIndex, sortingDataIndex, isDesc ) => {
+  return dataIndex === sortingDataIndex && isDesc
+          ? SORT_COVID_DATA_DESC
+          : SORT_COVID_DATA_ASC;
+  // return dataIndex === sortingDataIndex
+  //         ? isDesc
+  //           ? SORT_COVID_DATA_DESC
+  //           : SORT_COVID_DATA_ASC
+  //         : SORT_COVID_DATA_ASC;
 }
 
-function compareAsc( a, b ) {
-  return compareDesc( b, a );
-}
-
-function getComparator( propToCompare, isDesc=true ) {
-  const comparator =  !isDesc ? compareAsc: compareDesc;
-  return (countryA,countryB)=>comparator( countryA[propToCompare], countryB[propToCompare] );
-}
-
-const actionSortCovidTableAsc = dataIndex => ({ type: SORT_COVID_DATA_ASC, dataIndex });
-const actionSortCovidTableDesc = dataIndex => ({ type: SORT_COVID_DATA_DESC, dataIndex });
+const actionSortCovidTable = ( countries, dataIndex, sortingDataIndex, isDesc=false ) => ({
+  type: getSortType( dataIndex, sortingDataIndex, !isDesc ),
+  countries,
+  dataIndex,
+})
 
 const actionLoadCovidData = () => async dispatch => {
-  // return await dispatch( actionPromise( 'countries', fetchCountries() ) );
-
-  const p = fetchCountries()
+  const countriesPromise = fetchCountries()
               .then( countries => countries.map( ( x, i ) => ({...x, Index: i + 1 })) );
-  return await dispatch( actionPromise( 'countries', p ) );
+  return await dispatch( actionPromise( 'countries', countriesPromise ) );
 }
 
-// const actionLoadCovidData = () => async dispatch => {
-//   try {
-//     const countries = await dispatch( actionFetchCounties() );
-//     if ( Array.isArray( countries ) && countries.length > 0 ) {
-//       const orderedCountries = countries.map( ( x, i ) => ({...x, Index: i + 1 }));
-//       dispatch( actionSetCovidData( orderedCountries ) );
-//     }
-//     else {
-//       dispatch( actionSetCovidData( [] ) );
-//     }
-//   }
-//   catch ( err ) {
-//     const text = err.toString();
-//     // setError( text );
-//   }
+const actionFullLoadCovidData = () => async dispatch => {
+  const countries = await dispatch( actionLoadCovidData() )
+  if( Array.isArray( countries ) ) {
+    dispatch( actionSetCovidData( countries ) );
+  }
+};
 
-// }
 export {
   actionPromise,
-  actionLoadCovidData,
-  actionSortCovidTableAsc,
-  actionSortCovidTableDesc,
+  actionFullLoadCovidData,
+  actionSortCovidTable,
 }
