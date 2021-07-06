@@ -9,10 +9,11 @@ import store from './redux/store';
 import {Provider, connect}   from 'react-redux';
 import {
   actionFullLoadCovidData,
+  actionHideCountryDetails,
+  actionSetCountryDetailsData,
+  actionShowCountryDetails,
   actionSortCovidTable,
 } from './redux/actions';
-
-const isDetailsVisible = false;
 
 const columnConfigs = [{
   dataIndex : 'Index',
@@ -33,7 +34,18 @@ const CCovidTable= connect(state=>({
 }), dispatch=>({
   onSort: (countries, dataIndex, {dataIndex:sortingDataIndex, isDesc } ) =>
                  dispatch( actionSortCovidTable( countries, dataIndex, sortingDataIndex, isDesc ) ),
+
+  onSetDetailsData: country => dispatch( actionSetCountryDetailsData( country ) ),
+
+  onShowDetails : () => dispatch( actionShowCountryDetails() )
 }))(CovidTable);
+
+const CCountryDetailsModal= connect(state=>({
+  isVisible : state.countryDetails.isCountryDetailsVisible,
+  data      : state.countryDetails.data,
+}), dispatch=>({
+  onOk: () => dispatch( actionHideCountryDetails() ),
+}))(CountryDetailsModal);
 
 store.dispatch( actionFullLoadCovidData() )
 
@@ -43,7 +55,7 @@ function App() {
       <div className="App">
         {
           <>
-            {isDetailsVisible && <CountryDetailsModal />}
+            <CCountryDetailsModal  />
             <div className="table-top">
               <Logo />
               <h1>STATISTIC</h1>
