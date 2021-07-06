@@ -1,11 +1,17 @@
 import './App.css';
-import React, { useState, useEffect } from 'react'
 
 import CovidTable from './components/CovidTable';
 import CountryDetailsModal from './components/CountryDetailsModal';
 import Logo from './components/Logo';
 import Search from './components/Search';
-import loading from './loading-tr.gif';
+
+import store from './redux/store';
+import {Provider, connect}   from 'react-redux';
+import {
+  actionLoadCovidData,
+  // actionSortCovidTableAsc,
+  // actionSortCovidTableDesc  
+} from './redux/actions';
 
 const isDetailsVisible = false;
 
@@ -20,53 +26,36 @@ const columnConfigs = [{
   title     : 'Total Confirmed'
 }];
 
-const Preloader = ()=><img className="loader" src={loading} alt="Loading..." />
-const Error = ( {text} )=><h1 className="error">{text}</h1>
+const CCovidTable= connect(state=>({
+  countries: state.promise.countries?.payload,
+  error: state.promise.countries?.error?.toString(),
+// }), dispatch=>({
+//   sortAsc  : dataIndex=>dispatch( actionSortCovidTableAsc( dataIndex ) ),
+//   sortDesc : dataIndex=>dispatch( actionSortCovidTableDesc( dataIndex ) )
+// }))(CovidTable);
+}))(CovidTable);
+
+store.dispatch( actionLoadCovidData() )
+
 
 function App() {
-  const [countries, setCountries] = useState( [] );
-  const [error, setError] = useState( null )
-
-  useEffect( () => {
-    const fetchCountries = async() => {
-      const requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-      };
-
-      try {
-        const response = await fetch( 'https://api.covid19api.com/summary', requestOptions )
-        const orderedCountries = ( await response.json() ).Countries.map( ( x, i ) => ({...x, Index: i + 1 }) );
-        setError( null );
-        setCountries( orderedCountries );
-      }
-      catch ( err ) {
-        const text = err.toString();
-        setError( text );
-      }
-    }
-
-    fetchCountries();
-  }, [])
-
-
   return (
-    <div className="App">
-      { error != null
-        ? <Error text={error} />
-        : countries.length > 1
-          ? <>
-              {isDetailsVisible && <CountryDetailsModal />}
-              <div className="table-top">
-                <Logo />
-                <h1>STATISTIC</h1>
-                <Search />
-              </div>
-              <CovidTable countries={countries} columns={columnConfigs}/>
-            </>
-          : <Preloader />
-      }
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        {
+          <>
+            {isDetailsVisible && <CountryDetailsModal />}
+            <div className="table-top">
+              <Logo />
+              <h1>STATISTIC</h1>
+              <Search />
+            </div>
+            <CCovidTable columns={columnConfigs}/>
+          </>
+        
+        }
+      </div>
+    </Provider>
   );
 }
 

@@ -26,6 +26,10 @@
   line-height: 80px;
 }
 
+.Search input::placeholder {
+  color: #b2b2b2;
+}
+
 .Search button {
   border: none;
   background: none;
