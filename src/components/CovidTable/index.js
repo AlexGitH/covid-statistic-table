@@ -17,13 +17,10 @@ const CovidTable = ({countries,error,columns})=>{
 
                 <tbody>
                     {countries // .map(({ID,Index,Country,TotalConfirmed, TotalDeaths, TotalRecovered})=>{
-                      .map(({ID,...rest})=>{
-                        return (
-                          <tr key={ID}>
-                            {columns.map(({dataIndex})=><td key={dataIndex}>{rest[dataIndex]}</td>)}
-                          </tr>
-                        )
-                      })}
+                      .map(({ID,...rest}) => <tr key={ID}>
+                                               {columns.map(({dataIndex})=><td key={dataIndex}>{rest[dataIndex]}</td>)}
+                                             </tr>)
+                    }
                 </tbody>
             </table>
           </>
