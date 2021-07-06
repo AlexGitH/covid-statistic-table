@@ -2,7 +2,10 @@ import {
   PROMISE,
   SET_COVID_DATA,
   SORT_COVID_DATA_ASC,
-  SORT_COVID_DATA_DESC
+  SORT_COVID_DATA_DESC,
+  SHOW_COUNTRY_DETAILS,
+  HIDE_COUNTRY_DETAILS,
+  SET_COUNTRY_DETAILS_DATA,
 } from './actionTypes';
 
 import fetchCountries from '../api/covidApi';
@@ -59,8 +62,17 @@ const actionFullLoadCovidData = () => async dispatch => {
   }
 };
 
+const actionShowCountryDetails = () => ({ type: SHOW_COUNTRY_DETAILS });
+const actionHideCountryDetails = () => ({ type: HIDE_COUNTRY_DETAILS });
+const actionSetCountryDetailsData = ({Country, TotalConfirmed, TotalDeaths, TotalRecovered}) => ({
+  type: SET_COUNTRY_DETAILS_DATA, Country, TotalConfirmed, TotalDeaths, TotalRecovered
+});
+
 export {
   actionPromise,
   actionFullLoadCovidData,
   actionSortCovidTable,
+  actionShowCountryDetails,
+  actionHideCountryDetails,
+  actionSetCountryDetailsData,
 }
