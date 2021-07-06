@@ -1,4 +1,12 @@
-import { PROMISE, SET_COVID_DATA, SORT_COVID_DATA_ASC, SORT_COVID_DATA_DESC } from './actionTypes'
+import {
+  PROMISE,
+  SET_COVID_DATA,
+  SORT_COVID_DATA_ASC,
+  SORT_COVID_DATA_DESC,
+  SHOW_COUNTRY_DETAILS,
+  HIDE_COUNTRY_DETAILS,
+  SET_COUNTRY_DETAILS_DATA,
+} from './actionTypes'
 
 // promise
 const promiseReducer = ( state = {}, { type, status, payload, error, name } ) =>
@@ -38,9 +46,24 @@ const covidTableReducer = ( state={ visibleCountries:[], sortingField:{} }, { ty
   return state;
 }
 
+const countryDetailsReducer = ( state={ isCountryDetailsVisible: false, data:{} },
+                                   { type, Country, TotalConfirmed, TotalDeaths, TotalRecovered } ) => {
+  if ( type === SET_COUNTRY_DETAILS_DATA ) {
+    return { ...state, data:{ Country, TotalConfirmed, TotalDeaths, TotalRecovered } };
+  }
+  if ( type === SHOW_COUNTRY_DETAILS ) {
+    return { ...state, isCountryDetailsVisible: true };
+  }
+  if ( type === HIDE_COUNTRY_DETAILS ) {
+    return { ...state, isCountryDetailsVisible: false };
+  }
+  return state;
+}
+
 export {
   promiseReducer as promise,
   covidTableReducer as covidTable,
+  countryDetailsReducer as countryDetails,
 }
 
 
