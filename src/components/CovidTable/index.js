@@ -16,13 +16,11 @@ const CovidTable = ({countries,error,columns})=>{
                 </thead>
 
                 <tbody>
-                    {countries
-                      .map(({ID,Index,Country,TotalConfirmed, TotalDeaths, TotalRecovered})=>{
+                    {countries // .map(({ID,Index,Country,TotalConfirmed, TotalDeaths, TotalRecovered})=>{
+                      .map(({ID,...rest})=>{
                         return (
                           <tr key={ID}>
-                            <td>{Index}</td>
-                            <td>{Country}</td>
-                            <td>{TotalConfirmed}</td>
+                            {columns.map(({dataIndex})=><td key={dataIndex}>{rest[dataIndex]}</td>)}
                           </tr>
                         )
                       })}
