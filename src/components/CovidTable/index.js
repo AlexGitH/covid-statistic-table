@@ -5,8 +5,12 @@ import SortDirection from './SortDirection';
 const Preloader = ()=><img className="loader" src={loading} alt="Loading..." />
 const Error = ( {text} )=><h1 className="error">{text}</h1>
 
-const CovidTable = ({countries, visibleCountries, error, sortingField, columns, onSort})=>{
+const CovidTable = ({countries, visibleCountries, error, sortingField, columns, onSort,onSetDetailsData, onShowDetails})=>{
   const { dataIndex:sortingDataIndex, isDesc } = sortingField;
+  const onCountryClick = country => {
+    onSetDetailsData( country );
+    onShowDetails();
+  };
   return (
     error != null
       ? <Error text={error} />
@@ -36,7 +40,8 @@ const CovidTable = ({countries, visibleCountries, error, sortingField, columns, 
 
                 <tbody>
                     {visibleCountries // .map(({ID,Index,Country,TotalConfirmed, TotalDeaths, TotalRecovered})=>{
-                      .map(({ID,...rest}) => <tr key={ID}>
+                      .map(({ID,...rest}) => <tr key={ID}
+                                                 onClick={()=>onCountryClick( rest )}>
                                                {columns.map(({dataIndex})=><td key={dataIndex}>{rest[dataIndex]}</td>)}
                                              </tr>)
                     }
