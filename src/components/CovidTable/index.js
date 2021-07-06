@@ -4,19 +4,19 @@ import loading from './loading-tr.gif'
 const Preloader = ()=><img className="loader" src={loading} alt="Loading..." />
 const Error = ( {text} )=><h1 className="error">{text}</h1>
 
-const CovidTable = ({countries,error,columns})=>{
+const CovidTable = ({countries, visibleCountries, error, sortingField, columns, sortField})=>{
   return (
     error != null
       ? <Error text={error} />
-      : Array.isArray(countries) && countries.length > 1
+      : Array.isArray(visibleCountries)
         ? <>
             <table className="CovidTable">
                 <thead>
-                    <tr>{ columns.map( ({dataIndex,title}) => ( <th key={dataIndex}>{title}</th>))}</tr>
+                    <tr>{ columns.map( ({dataIndex,title}) => ( <th key={dataIndex} onClick={ () => sortField(countries,dataIndex,sortingField ) }>{title}</th>))}</tr>
                 </thead>
 
                 <tbody>
-                    {countries // .map(({ID,Index,Country,TotalConfirmed, TotalDeaths, TotalRecovered})=>{
+                    {visibleCountries // .map(({ID,Index,Country,TotalConfirmed, TotalDeaths, TotalRecovered})=>{
                       .map(({ID,...rest}) => <tr key={ID}>
                                                {columns.map(({dataIndex})=><td key={dataIndex}>{rest[dataIndex]}</td>)}
                                              </tr>)
