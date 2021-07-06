@@ -27,16 +27,15 @@ const columnConfigs = [{
 
 const CCovidTable= connect(state=>({
   countries       : state.promise.countries?.payload,
-  visibleCountries: state.covidTable.visibleCountries,
   error           : state.promise.countries?.error?.toString(),
+  visibleCountries: state.covidTable.visibleCountries,
   sortingField    : state.covidTable.sortingField
 }), dispatch=>({
-  sortField  : (countries, dataIndex, {dataIndex:sortingDataIndex, isDesc } ) =>
+  onSort: (countries, dataIndex, {dataIndex:sortingDataIndex, isDesc } ) =>
                  dispatch( actionSortCovidTable( countries, dataIndex, sortingDataIndex, isDesc ) ),
 }))(CovidTable);
 
 store.dispatch( actionFullLoadCovidData() )
-
 
 function App() {
   return (
@@ -52,7 +51,6 @@ function App() {
             </div>
             <CCovidTable columns={columnConfigs}/>
           </>
-        
         }
       </div>
     </Provider>
