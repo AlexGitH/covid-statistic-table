@@ -40,6 +40,9 @@ table.CovidTable tbody td {
 }
 table.CovidTable thead tr {
   border-radius: 20px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: -18px;
 }
 
 table.CovidTable thead th {
@@ -61,4 +64,21 @@ table.CovidTable thead tr *:first-child {
 
 table.CovidTable thead tr *:last-child {
   border-radius: 0 20px 20px 0;
+}
+
+.App img.loader{
+  width: 200px;
+  height: 200px;
+}
+
+.App .error,
+.App .loader {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.App .error {
+  color: #500303;
 }
