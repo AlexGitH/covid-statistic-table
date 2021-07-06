@@ -28,9 +28,6 @@ table.CovidTable tr>td {
   border-left : 1px solid #B2B2B2;
 }
 
-
-
-
 table.CovidTable td,
 table.CovidTable th {
   padding-left: 23px;
@@ -46,6 +43,11 @@ table.CovidTable th {
 table.CovidTable tbody td {
   font-size: 24px;
 }
+
+table.CovidTable tbody tr {
+  cursor: pointer;
+}
+
 table.CovidTable thead tr {
   border-radius: 20px;
   position: -webkit-sticky;
