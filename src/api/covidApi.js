@@ -5,16 +5,14 @@ const requestOptions = {
   redirect: 'follow'
 };
 
-const fetchCountries = async({setError,setCountries}) => {
+const fetchCountries = async() => {
   try {
     const response = await fetch( URL, requestOptions )
-    const orderedCountries = ( await response.json() ).Countries.map( ( x, i ) => ({...x, Index: i + 1 }) );
-    setError( null );
-    setCountries( orderedCountries );
+    const orderedCountries = ( await response.json() ).Countries;
+    return orderedCountries;
   }
   catch ( err ) {
-    const text = err.toString();
-    setError( text );
+    throw err;
   }
 }
 
