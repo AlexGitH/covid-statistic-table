@@ -1,4 +1,4 @@
-import { PROMISE, SET_COVID_DATA, SORT_COVID_DATA_ASC, SORT_COVID_DATA_DESC } from './actionTypes'
+import { PROMISE, SET_COVID_DATA, SORT_COVID_DATA_ASC, SORT_COVID_DATA_DESC, FILTER_COVID_DATA } from './actionTypes'
 
 // promise
 const promiseReducer = ( state = {}, { type, status, payload, error, name } ) =>
@@ -25,10 +25,25 @@ const getSortedCountiresState = (countries, dataIndex, isDesc) => ({
   sortingField : { dataIndex, isDesc }
 })
 
-const covidTableReducer = ( state={ visibleCountries:[], sortingField:{} }, { type, countries, dataIndex }) =>{
+const covidTableReducer = ( state={ visibleCountries:[], sortingField:{}, search:'' }, { type, search, countries, dataIndex }) =>{
+  const {dataIndex:sortingDataIndex, isDesc } = state.sortingField;
+  if ( type === FILTER_COVID_DATA ) {
+    const filterFn = ({Country})=>Country.toLowerCase().indexOf( search.toLowerCase() ) === 0 
+    return  {
+      ...state, 
+      visibleCountries: search.length > state.search.length
+                          ? state.visibleCountries.filter(filterFn)
+                          : Array.isArray( countries )
+                            ? [...countries].sort( getComparator( sortingDataIndex, isDesc ) ).filter(filterFn)
+                            : [],
+      search,
+    }
+  }
+  
   if ( type === SET_COVID_DATA ) {
     return { ...state, visibleCountries: [...countries] }
   }
+
   if ( type === SORT_COVID_DATA_ASC ) {
     return { ...state, ...getSortedCountiresState( countries, dataIndex, false ) }
   }
