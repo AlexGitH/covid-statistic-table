@@ -37,7 +37,8 @@ const CCovidTable= connect(state=>({
 }))(CovidTable);
 
 const CSearch= connect(state=>({
-  countries       : state.promise.countries?.payload,
+  search   : state.covidTable.search,
+  countries: state.promise.countries?.payload,
 }), dispatch=>({
   filterCovidTable: (countries, search ) =>
                  dispatch( actionFilterCovidData( countries, search ) ),
