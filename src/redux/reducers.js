@@ -20,23 +20,29 @@ const getComparator = ( propToCompare, isDesc=true ) => {
   return (countryA,countryB)=>comparator( countryA[propToCompare], countryB[propToCompare] );
 }
 
-const getSortedCountiresState = (countries, dataIndex, isDesc) => ({
+const getSortedCountriesState = (countries, dataIndex, isDesc) => ({
   visibleCountries : [...countries].sort( getComparator( dataIndex, isDesc ) ),
   sortingField : { dataIndex, isDesc }
 })
 
+const getFilterFn = (search, stateSearch) => {
+  const searchText= search!=null ? search : stateSearch;
+  return ({Country})=> Country.toLowerCase().indexOf( searchText.toLowerCase() ) === 0;
+}
+
 const covidTableReducer = ( state={ visibleCountries:[], sortingField:{}, search:'' }, { type, search, countries, dataIndex }) =>{
   const {dataIndex:sortingDataIndex, isDesc } = state.sortingField;
+  const filterFn = getFilterFn( search, state.search )
   if ( type === FILTER_COVID_DATA ) {
-    const filterFn = ({Country})=>Country.toLowerCase().indexOf( search.toLowerCase() ) === 0 
     return  {
       ...state, 
-      visibleCountries: search.length > state.search.length
+      search,
+      // if search text length greater then previous use previously filtered cuntries from view
+      visibleCountries: search.length > state.search.length 
                           ? state.visibleCountries.filter(filterFn)
                           : Array.isArray( countries )
                             ? [...countries].sort( getComparator( sortingDataIndex, isDesc ) ).filter(filterFn)
                             : [],
-      search,
     }
   }
   
@@ -45,10 +51,13 @@ const covidTableReducer = ( state={ visibleCountries:[], sortingField:{}, search
   }
 
   if ( type === SORT_COVID_DATA_ASC ) {
-    return { ...state, ...getSortedCountiresState( countries, dataIndex, false ) }
+    const filteredCountries = countries.filter(filterFn);
+    return { ...state, ...getSortedCountriesState( filteredCountries, dataIndex, false ) }
   }
+  
   if ( type === SORT_COVID_DATA_DESC ) {
-    return { ...state, ...getSortedCountiresState( countries, dataIndex, true ) }
+    const filteredCountries = countries.filter(filterFn);
+    return { ...state, ...getSortedCountriesState( filteredCountries, dataIndex, true ) }
   }
   return state;
 }
