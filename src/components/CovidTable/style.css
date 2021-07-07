@@ -74,7 +74,8 @@ table.CovidTable tbody tr td:first-child {
 }
 
 table.CovidTable thead tr th:last-child {
-  width: 360px;
+  max-width: 360px;
+  min-width: 200px;
 }
 
 table.CovidTable thead tr th:last-child,
