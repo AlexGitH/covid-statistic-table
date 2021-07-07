@@ -9,6 +9,4 @@ const store = createStore( combineReducers( {
   countryDetails,
 } ), applyMiddleware( thunk ) )
 
-window.store = store  // DEBUG: for test only
-
 export default store;

@@ -14,40 +14,37 @@ const CovidTable = ({countries, visibleCountries, error, sortingField, columns, 
   return (
     error != null
       ? <Error text={error} />
-      : Array.isArray(visibleCountries)
-        ? <>
-            <table className="CovidTable">
-                <thead>
-                    {/* <tr>{ columns.map( ({dataIndex,title}) => ( <th key={dataIndex} onClick={ () => onSort(countries,dataIndex,sortingField ) }>{title}</th>))}</tr> */}
-                    <tr>{ columns.map( ({dataIndex,title}) => (
-                      <th key={dataIndex} onClick={ () => onSort(countries,dataIndex,sortingField ) }>
+      : Array.isArray(countries)
+        ? <table className="CovidTable">
+              <thead>
+                  <tr>{ columns.map( ({dataIndex,title}) => (
+                    <th key={dataIndex} onClick={ () => onSort(countries,dataIndex,sortingField ) }>
+                      <div>
                         <div>
                           <div>
-                            <div>
-                              {title}
-                            </div>
+                            {title}
                           </div>
-                          <SortDirection
-                            className="sort-direction"
-                            dataIndex={dataIndex}
-                            sortingDataIndex={sortingDataIndex}
-                            isDesc={isDesc}
-                          />
                         </div>
-                        </th>))}
-                    </tr>
-                </thead>
+                        <SortDirection
+                          className="sort-direction"
+                          dataIndex={dataIndex}
+                          sortingDataIndex={sortingDataIndex}
+                          isDesc={isDesc}
+                        />
+                      </div>
+                      </th>))}
+                  </tr>
+              </thead>
 
-                <tbody>
-                    {visibleCountries // .map(({ID,Index,Country,TotalConfirmed, TotalDeaths, TotalRecovered})=>{
-                      .map(({ID,...rest}) => <tr key={ID}
-                                                 onClick={()=>onCountryClick( rest )}>
-                                               {columns.map(({dataIndex})=><td key={dataIndex}>{rest[dataIndex]}</td>)}
-                                             </tr>)
-                    }
-                </tbody>
-            </table>
-          </>
+              <tbody>
+                  {visibleCountries 
+                    .map(({ID,...rest}) => <tr key={ID}
+                                               onClick={()=>onCountryClick( rest )}>
+                                             {columns.map(({dataIndex})=><td key={dataIndex}>{rest[dataIndex]}</td>)}
+                                           </tr>)
+                  }
+              </tbody>
+          </table>
         : <Preloader />
   );
 }
