@@ -1,13 +1,19 @@
-import { PROMISE, SET_COVID_DATA, SORT_COVID_DATA_ASC, SORT_COVID_DATA_DESC, FILTER_COVID_DATA } from './actionTypes'
+import {
+  PROMISE,
+  SET_COVID_DATA,
+  SORT_COVID_DATA_ASC,
+  SORT_COVID_DATA_DESC,
+  FILTER_COVID_DATA,
+  SHOW_COUNTRY_DETAILS,
+  HIDE_COUNTRY_DETAILS,
+  SET_COUNTRY_DETAILS_DATA,
+} from './actionTypes'
 
 // promise
 const promiseReducer = ( state = {}, { type, status, payload, error, name } ) =>
   ( type === PROMISE
       ? { ...state, [name]: { status, payload, error } }
       : state )
-
-
-// covid table
 
 // sort
 const compareDesc = ( a, b ) => ( a > b ?  1 : 
@@ -25,11 +31,13 @@ const getSortedCountriesState = (countries, dataIndex, isDesc) => ({
   sortingField : { dataIndex, isDesc }
 })
 
+// filter
 const getFilterFn = (search, stateSearch) => {
   const searchText= search!=null ? search : stateSearch;
   return ({Country})=> Country.toLowerCase().indexOf( searchText.toLowerCase() ) === 0;
 }
 
+// covid table
 const covidTableReducer = ( state={ visibleCountries:[], sortingField:{}, search:'' }, { type, search, countries, dataIndex }) =>{
   const {dataIndex:sortingDataIndex, isDesc } = state.sortingField;
   const filterFn = getFilterFn( search, state.search )
@@ -62,9 +70,24 @@ const covidTableReducer = ( state={ visibleCountries:[], sortingField:{}, search
   return state;
 }
 
+const countryDetailsReducer = ( state={ isCountryDetailsVisible: false, data:{} },
+                                   { type, Country, TotalConfirmed, TotalDeaths, TotalRecovered } ) => {
+  if ( type === SET_COUNTRY_DETAILS_DATA ) {
+    return { ...state, data:{ Country, TotalConfirmed, TotalDeaths, TotalRecovered } };
+  }
+  if ( type === SHOW_COUNTRY_DETAILS ) {
+    return { ...state, isCountryDetailsVisible: true };
+  }
+  if ( type === HIDE_COUNTRY_DETAILS ) {
+    return { ...state, isCountryDetailsVisible: false };
+  }
+  return state;
+}
+
 export {
   promiseReducer as promise,
   covidTableReducer as covidTable,
+  countryDetailsReducer as countryDetails,
 }
 
 
