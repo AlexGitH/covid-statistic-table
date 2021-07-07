@@ -73,6 +73,10 @@ table.CovidTable tbody tr td:first-child {
   width: 78px;
 }
 
+table.CovidTable thead tr th:last-child {
+  width: 360px;
+}
+
 table.CovidTable thead tr th:last-child,
 table.CovidTable tbody tr td:last-child {
   border-radius: 0 20px 20px 0;
