@@ -8,6 +8,7 @@ import Search from './components/Search';
 import store from './redux/store';
 import {Provider, connect}   from 'react-redux';
 import {
+  actionFilterCovidData,
   actionFullLoadCovidData,
   actionSortCovidTable,
 } from './redux/actions';
@@ -35,6 +36,13 @@ const CCovidTable= connect(state=>({
                  dispatch( actionSortCovidTable( countries, dataIndex, sortingDataIndex, isDesc ) ),
 }))(CovidTable);
 
+const CSearch= connect(state=>({
+  countries       : state.promise.countries?.payload,
+}), dispatch=>({
+  filterCovidTable: (countries, search ) =>
+                 dispatch( actionFilterCovidData( countries, search ) ),
+}))(Search);
+
 store.dispatch( actionFullLoadCovidData() )
 
 function App() {
@@ -47,7 +55,7 @@ function App() {
             <div className="table-top">
               <Logo />
               <h1>STATISTIC</h1>
-              <Search />
+              <CSearch />
             </div>
             <CCovidTable columns={columnConfigs}/>
           </>
