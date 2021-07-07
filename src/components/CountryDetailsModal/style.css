@@ -20,7 +20,7 @@
   background: white;
   position: absolute;
   width: 600px;
-  height: 400px;
+  min-height: 400px;
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
