@@ -4,7 +4,7 @@ import deaths from './deaths.svg';
 import recovered from './recovered.svg';
 
 
-const CountryDetailsModal = ({ isVisible, data: { TotalConfirmed, TotalDeaths, TotalRecovered } , onOk })=>{
+const CountryDetailsModal = ({ isVisible, data: { Country, TotalConfirmed, TotalDeaths, TotalRecovered } , onOk })=>{
   const details = [
     [confirmed,'Total Confirmed', TotalConfirmed],
     [deaths,'Total Deaths', TotalDeaths],
@@ -16,7 +16,7 @@ const CountryDetailsModal = ({ isVisible, data: { TotalConfirmed, TotalDeaths, T
     <div className="CountryDetailsModal">
       <div className="country-modal-content">
         <div className="country-modal-header">
-          <h4>Albania</h4>
+          <h4>{Country}</h4>
         </div>
         <div className="country-modal-body">
           <table>
