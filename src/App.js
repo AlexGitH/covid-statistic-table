@@ -56,9 +56,8 @@ const CCountryDetailsModal= connect(state=>({
   onOk: () => dispatch( actionHideCountryDetails() ),
 }))(CountryDetailsModal);
 
-store.dispatch( actionFullLoadCovidData() )
-
 function App() {
+  store.dispatch( actionFullLoadCovidData() );
   return (
     <Provider store={store}>
       <div className="App">
