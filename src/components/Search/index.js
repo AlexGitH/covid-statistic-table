@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.css';
 import scope from './scope.svg';
 
 
-const Search = () => {
+const Search = ( {countries, filterCovidTable} ) => {
   const [search, setSearch] = useState('');
+  useEffect(() => {
+    filterCovidTable( countries, search );
+  }, [search] )
+
+
 
   return <div className="Search" >
     <input
