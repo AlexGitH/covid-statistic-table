@@ -12,13 +12,11 @@ const CovidTable = ({countries, visibleCountries, error, sortingField, columns, 
     onShowDetails();
   };
   return (
-        //  <Preloader />
     error != null
       ? <Error text={error} />
       : Array.isArray(countries)
         ? <table className="CovidTable">
               <thead>
-                  {/* <tr>{ columns.map( ({dataIndex,title}) => ( <th key={dataIndex} onClick={ () => onSort(countries,dataIndex,sortingField ) }>{title}</th>))}</tr> */}
                   <tr>{ columns.map( ({dataIndex,title}) => (
                     <th key={dataIndex} onClick={ () => onSort(countries,dataIndex,sortingField ) }>
                       <div>
@@ -39,7 +37,7 @@ const CovidTable = ({countries, visibleCountries, error, sortingField, columns, 
               </thead>
 
               <tbody>
-                  {visibleCountries // .map(({ID,Index,Country,TotalConfirmed, TotalDeaths, TotalRecovered})=>{
+                  {visibleCountries 
                     .map(({ID,...rest}) => <tr key={ID}
                                                onClick={()=>onCountryClick( rest )}>
                                              {columns.map(({dataIndex})=><td key={dataIndex}>{rest[dataIndex]}</td>)}
