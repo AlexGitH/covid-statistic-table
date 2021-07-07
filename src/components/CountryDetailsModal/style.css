@@ -27,9 +27,9 @@
   transform: translate(-50%, -50%);
 
   -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
+  -webkit-animation-duration: 0.2s;
   animation-name: animatetop;
-  animation-duration: 0.4s
+  animation-duration: 0.2s
 }
 
 .CountryDetailsModal .country-modal-header {
