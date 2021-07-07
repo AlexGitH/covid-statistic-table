@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
 import './style.css';
 import scope from './scope.svg';
 
 
-const Search = () => {
-  const [search, setSearch] = useState('');
+const Search = ( { search, countries, filterCovidTable} ) => {
 
   return <div className="Search" >
     <input
     type="text"
     placeholder="Search..."
     value={search}
-    onChange={ e => setSearch( e.target.value ) } />
+    onChange={ e => filterCovidTable( countries, e.target.value ) } />
     
     <img src={scope} alt="Search" />
   </div>

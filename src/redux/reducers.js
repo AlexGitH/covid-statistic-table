@@ -1,4 +1,4 @@
-import { PROMISE, SET_COVID_DATA, SORT_COVID_DATA_ASC, SORT_COVID_DATA_DESC } from './actionTypes'
+import { PROMISE, SET_COVID_DATA, SORT_COVID_DATA_ASC, SORT_COVID_DATA_DESC, FILTER_COVID_DATA } from './actionTypes'
 
 // promise
 const promiseReducer = ( state = {}, { type, status, payload, error, name } ) =>
@@ -20,20 +20,44 @@ const getComparator = ( propToCompare, isDesc=true ) => {
   return (countryA,countryB)=>comparator( countryA[propToCompare], countryB[propToCompare] );
 }
 
-const getSortedCountiresState = (countries, dataIndex, isDesc) => ({
+const getSortedCountriesState = (countries, dataIndex, isDesc) => ({
   visibleCountries : [...countries].sort( getComparator( dataIndex, isDesc ) ),
   sortingField : { dataIndex, isDesc }
 })
 
-const covidTableReducer = ( state={ visibleCountries:[], sortingField:{} }, { type, countries, dataIndex }) =>{
+const getFilterFn = (search, stateSearch) => {
+  const searchText= search!=null ? search : stateSearch;
+  return ({Country})=> Country.toLowerCase().indexOf( searchText.toLowerCase() ) === 0;
+}
+
+const covidTableReducer = ( state={ visibleCountries:[], sortingField:{}, search:'' }, { type, search, countries, dataIndex }) =>{
+  const {dataIndex:sortingDataIndex, isDesc } = state.sortingField;
+  const filterFn = getFilterFn( search, state.search )
+  if ( type === FILTER_COVID_DATA ) {
+    return  {
+      ...state, 
+      search,
+      // if search text length greater then previous use previously filtered cuntries from view
+      visibleCountries: search.length > state.search.length 
+                          ? state.visibleCountries.filter(filterFn)
+                          : Array.isArray( countries )
+                            ? [...countries].sort( getComparator( sortingDataIndex, isDesc ) ).filter(filterFn)
+                            : [],
+    }
+  }
+  
   if ( type === SET_COVID_DATA ) {
     return { ...state, visibleCountries: [...countries] }
   }
+
   if ( type === SORT_COVID_DATA_ASC ) {
-    return { ...state, ...getSortedCountiresState( countries, dataIndex, false ) }
+    const filteredCountries = countries.filter(filterFn);
+    return { ...state, ...getSortedCountriesState( filteredCountries, dataIndex, false ) }
   }
+  
   if ( type === SORT_COVID_DATA_DESC ) {
-    return { ...state, ...getSortedCountiresState( countries, dataIndex, true ) }
+    const filteredCountries = countries.filter(filterFn);
+    return { ...state, ...getSortedCountriesState( filteredCountries, dataIndex, true ) }
   }
   return state;
 }

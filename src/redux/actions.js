@@ -1,4 +1,5 @@
 import {
+  FILTER_COVID_DATA,
   PROMISE,
   SET_COVID_DATA,
   SORT_COVID_DATA_ASC,
@@ -59,8 +60,13 @@ const actionFullLoadCovidData = () => async dispatch => {
   }
 };
 
+const actionFilterCovidData = ( countries, search ) => ({
+  type: FILTER_COVID_DATA, countries, search
+})
+
 export {
   actionPromise,
   actionFullLoadCovidData,
   actionSortCovidTable,
+  actionFilterCovidData,
 }
